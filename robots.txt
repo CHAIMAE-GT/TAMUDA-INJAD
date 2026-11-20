@@ -1,0 +1,3 @@
+# Site en préparation : indexation désactivée. Passer INDEXABLE à True dans build.py à la mise en ligne.
+User-agent: *
+Disallow: /

@@ -1,0 +1,328 @@
+/* ── Zone & carte – layout carte interactive ── */
+.zone-hero-map {
+  display: grid;
+  grid-template-columns: 1fr minmax(260px, 320px);
+  gap: 0;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--border, #e2e8f0);
+  background: #fff;
+  box-shadow: 0 4px 24px rgba(32, 53, 102, 0.08);
+  min-height: 480px;
+}
+
+@media (max-width: 900px) {
+  .zone-hero-map {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+}
+
+.zone-map-panel {
+  position: relative;
+  min-height: 420px;
+  background: #e8f0f6;
+}
+
+.zone-map-panel #zone-map {
+  width: 100%;
+  height: 100%;
+  min-height: 420px;
+  z-index: 1;
+}
+
+.zone-map-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 2rem;
+  text-align: center;
+  background: linear-gradient(160deg, #dbeafe 0%, #e0f2fe 50%, #f0f9ff 100%);
+  z-index: 2;
+}
+
+.zone-map-placeholder[hidden] {
+  display: none;
+}
+
+.zone-map-placeholder p {
+  max-width: 28ch;
+  margin: 0;
+  color: #334155;
+  font-size: 0.95rem;
+}
+
+.zone-map-placeholder .meta {
+  font-size: 0.8rem;
+  color: #64748b;
+}
+
+/* Sidebar villes */
+.zone-cities-panel {
+  display: flex;
+  flex-direction: column;
+  background: #f8fafc;
+  border-left: 1px solid var(--border, #e2e8f0);
+  max-height: 520px;
+}
+
+@media (max-width: 900px) {
+  .zone-cities-panel {
+    border-left: none;
+    border-top: 1px solid var(--border, #e2e8f0);
+    max-height: none;
+  }
+}
+
+.zone-cities-head {
+  padding: 1.25rem 1.25rem 0.75rem;
+  border-bottom: 1px solid var(--border, #e2e8f0);
+  background: #fff;
+}
+
+.zone-cities-head h2 {
+  margin: 0 0 0.35rem;
+  font-size: 1.35rem;
+  color: #0f2744;
+}
+
+.zone-cities-head p {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #64748b;
+}
+
+.zone-cities-list {
+  list-style: none;
+  margin: 0;
+  padding: 0.75rem;
+  overflow-y: auto;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.zone-city-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  width: 100%;
+  padding: 0.7rem 0.9rem;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: #fff;
+  color: #1e293b;
+  font: inherit;
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s, box-shadow 0.15s;
+}
+
+.zone-city-btn:hover {
+  border-color: #bfdbfe;
+  background: #f0f7ff;
+}
+
+.zone-city-btn.is-active,
+.zone-city-btn[aria-pressed="true"] {
+  border-color: #3b82f6;
+  background: #eff6ff;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+  color: #1e40af;
+}
+
+.zone-city-btn .pin-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #e11d48;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 3px rgba(225, 29, 72, 0.2);
+}
+
+.zone-city-btn .tag-mini {
+  margin-left: auto;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: #64748b;
+  background: #f1f5f9;
+  padding: 0.15rem 0.45rem;
+  border-radius: 999px;
+}
+
+.zone-city-btn.is-active .tag-mini,
+.zone-city-btn[aria-pressed="true"] .tag-mini {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.zone-cities-foot {
+  padding: 0.75rem 1.25rem;
+  border-top: 1px solid var(--border, #e2e8f0);
+  background: #fff;
+  font-size: 0.8rem;
+  color: #64748b;
+}
+
+/* Légende sous la carte */
+.zone-legend-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  align-items: center;
+  margin-top: 1rem;
+  font-size: 0.875rem;
+  color: #475569;
+}
+
+.zone-legend-bar .leg {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.zone-legend-bar .dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.zone-legend-bar .dot.local { background: #e11d48; }
+.zone-legend-bar .dot.circle {
+  background: transparent;
+  border: 2px solid #2563eb;
+  box-sizing: border-box;
+}
+.zone-legend-bar .dot.demand { background: #94a3b8; }
+
+/* Trajets types – route cards */
+.route-grid {
+  list-style: none;
+  margin: 1.5rem 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 0.85rem;
+}
+
+.route-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.1rem 1.2rem;
+}
+
+.route-card .route {
+  font-weight: 650;
+  font-size: 1.05rem;
+  color: #0f2744;
+}
+
+.route-card .tag {
+  align-self: flex-start;
+  font-size: 0.72rem;
+  font-weight: 650;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+}
+
+.route-card .tag.local {
+  background: #fce7f3;
+  color: #9d174d;
+}
+.route-card .tag.demand {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+/* Leaflet overrides */
+.leaflet-container {
+  font-family: inherit;
+  border-radius: 0;
+}
+
+.zone-marker-icon {
+  background: transparent;
+  border: none;
+}
+
+.zone-pin {
+  width: 28px;
+  height: 36px;
+  position: relative;
+}
+
+.zone-pin::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  width: 18px;
+  height: 18px;
+  background: #e11d48;
+  border-radius: 50% 50% 50% 0;
+  transform: translateX(-50%) rotate(-45deg);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+  border: 2px solid #fff;
+}
+
+.zone-pin.is-active::before {
+  background: #1d4ed8;
+  width: 22px;
+  height: 22px;
+}
+
+.zone-pin-label {
+  position: absolute;
+  left: 50%;
+  top: 22px;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font-size: 11px;
+  font-weight: 700;
+  color: #0f2744;
+  background: rgba(255,255,255,0.92);
+  padding: 1px 5px;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+  pointer-events: none;
+}
+
+/* Resultat trajet form */
+.route-result {
+  margin: 0.75rem 0;
+  padding: 0.85rem 1rem;
+  border-radius: 10px;
+  font-size: 0.95rem;
+}
+
+.route-result.is-local {
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  color: #065f46;
+}
+
+.route-result.is-demand {
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  color: #92400e;
+}
+
+.route-result.is-unknown {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  color: #334155;
+}
